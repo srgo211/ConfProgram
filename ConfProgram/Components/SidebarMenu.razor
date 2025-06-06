@@ -1,0 +1,49 @@
+﻿@inject NavigationManager NavigationManager
+@inject ConfProgram.Services.ConferenceService ConferenceService
+
+<div class="sidebar p-3 text-white bg-dark">
+    <h5 class="mb-3">Навигация</h5>
+
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link text-white" @onclick="@(() => NavigateTo("/"))">Главная</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-white" @onclick="@(() => NavigateTo("/program"))">Программа</a>
+        </li>
+
+        @foreach (var part in ConferenceService.Data.Parts)
+        {
+            <li class="nav-item ms-2 mt-2">
+                <span class="fw-bold">@part.Name</span>
+                <ul class="nav flex-column ms-3">
+                    @foreach (var room in part.Rooms)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white"
+                               @onclick="@(() => NavigateTo($"/room/{part.Id}?room={room.Id}"))">
+                                @room.Title
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+</div>
+
+@code {
+    private void NavigateTo(string url)
+    {
+        NavigationManager.NavigateTo(url);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (ConferenceService.Data.Parts.Count == 0)
+        {
+            await ConferenceService.LoadDataAsync();
+        }
+    }
+}

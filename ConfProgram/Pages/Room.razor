@@ -1,0 +1,126 @@
+﻿@page "/room/{PartId}"
+@using Microsoft.AspNetCore.WebUtilities
+@using ConfProgram.Models
+@inject NavigationManager NavigationManager
+@inject ConfProgram.Services.ConferenceService ConferenceService
+@implements IDisposable
+
+@if (SelectedPart is null)
+{
+    <p class="text-muted">Часть не найдена.</p>
+}
+else
+{
+    <h4 class="text-center mt-4" style="color: var(--color-orange);">
+        Комнаты для: @SelectedPart.Name
+    </h4>
+
+    <div class="d-flex justify-content-center flex-wrap">
+        @foreach (var room in SelectedPart.Rooms)
+        {
+            <button class="btn btn-rosneft-alt m-2 @(SelectedRoom?.Id == room.Id ? "active" : "")"
+                    @onclick="@(() => NavigateToRoom(room))">
+                @room.Title
+            </button>
+        }
+    </div>
+
+    @if (SelectedRoom is not null)
+    {
+        <h4 class="text-center mt-4" style="color: var(--color-orange);">
+            Программа комнаты: @SelectedRoom.Title
+        </h4>
+
+        <table class="table table-bordered mt-3 text-center table-striped rosneft-table">
+            <thead class="table-header">
+                <tr>
+                    <th>Время</th>
+                    <th>Тема</th>
+                    <th>Докладчик</th>
+                    <th>Организация</th>
+                    <th>Презентация</th>
+                    <th>Подключение</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var talk in SelectedRoom.Talks)
+                {
+                    <tr>
+                        <td>@talk.Time</td>
+                        <td>@talk.Topic</td>
+                        <td>@talk.Speaker</td>
+                        <td>@talk.Organization</td>
+                        <td>
+                            <a href="@talk.PresentationUrl" target="_blank">Скачать</a>
+                        </td>
+                        <td>
+                            <a href="@talk.JoinUrl" target="_blank">Перейти</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    [Parameter]
+    public string? PartId { get; set; }
+
+    private ConferencePart? SelectedPart;
+    private ConferenceRoom? SelectedRoom;
+
+    protected override async Task OnInitializedAsync()
+    {
+        NavigationManager.LocationChanged += OnLocationChanged;
+
+        if (ConferenceService.Data.Parts.Count == 0)
+            await ConferenceService.LoadDataAsync();
+
+        SelectedPart = ConferenceService.Data.Parts.FirstOrDefault(p => p.Id == PartId);
+        UpdateRoomFromQuery();
+    }
+
+    protected override void OnParametersSet()
+    {
+        SelectedPart = ConferenceService.Data.Parts.FirstOrDefault(p => p.Id == PartId);
+        UpdateRoomFromQuery();
+    }
+
+    private void NavigateToRoom(ConferenceRoom room)
+    {
+        // Обновляем URL (без перезагрузки)
+        NavigationManager.NavigateTo($"/room/{PartId}?room={room.Id}", replace: true);
+
+        // Обновляем состояние компонента вручную
+        SelectedRoom = room;
+        StateHasChanged();
+    }
+
+    private void UpdateRoomFromQuery()
+    {
+        if (SelectedPart is null)
+            return;
+
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("room", out var roomId))
+        {
+            SelectedRoom = SelectedPart.Rooms.FirstOrDefault(r => r.Id == roomId);
+        }
+        else
+        {
+            SelectedRoom = null;
+        }
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        UpdateRoomFromQuery();
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}

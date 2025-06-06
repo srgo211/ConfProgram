@@ -1,0 +1,41 @@
+﻿@page "/program"
+@using ConfProgram.Models
+@inject ConfProgram.Services.ConferenceService ConferenceService
+@inject NavigationManager NavigationManager
+
+<div class="program-background program-page text-white">
+
+    <h3>Программа конференции</h3>
+
+    @if (ConferenceService.Data.Parts.Count == 0)
+    {
+        <p class="text-center text-muted"><em>Данные не загружены.</em></p>
+    }
+    else
+    {
+        <h4>Выберите день:</h4>
+        <div class="d-flex justify-content-center flex-wrap">
+            @foreach (var part in ConferenceService.Data.Parts)
+            {
+                <button class="btn btn-rosneft m-2" @onclick="() => GoToPart(part.Id)">
+                    @part.Name
+                </button>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private void GoToPart(string partId)
+    {
+        NavigationManager.NavigateTo($"/room/{partId}");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (ConferenceService.Data.Parts.Count == 0)
+        {
+            await ConferenceService.LoadDataAsync();
+        }
+    }
+}

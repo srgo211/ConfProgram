@@ -1,0 +1,116 @@
+{
+  "parts": [
+    {
+      "id": "day1",
+      "name": "ЧАСТЬ 1",
+      "rooms": [
+        {
+          "id": "room1",
+          "title": "СМЕТНЫЕ НОРМАТИВЫ В КАПИТАЛЬНОМ СТРОИТЕЛЬСТВЕ",
+          "talks": [
+            {
+              "time": "10:00 – 10:45",
+              "topic": "Смета1-Обзор нормативной базы",
+              "speaker": "Иванов Иван Иванович",
+              "organization": "Минстрой России",
+              "presentationUrl": "https://example.com/presentations/normative.pdf",
+              "joinUrl": "https://example.com/join/room1/session1"
+            },
+            {
+              "time": "11:00 – 11:45",
+              "topic": "Смета2 - Новые подходы к ценообразованию",
+              "speaker": "Петров Петр Петрович",
+              "organization": "ЦНИИЭС",
+              "presentationUrl": "https://example.com/presentations/pricing.pdf",
+              "joinUrl": "https://example.com/join/room1/session2"
+            }
+          ]
+        },
+        {
+          "id": "room2",
+          "title": "ПРАКТИЧЕСКИЕ ИНСТРУМЕНТЫ ПО ОПРЕДЕЛЕНИЮ СМЕТНОЙ СТОИМОСТИ",
+          "talks": [
+            {
+              "time": "12:00 – 12:45",
+              "topic": "Практика - Применение BIM в сметах",
+              "speaker": "Сидоров Алексей Сергеевич",
+              "organization": "Госэкспертиза РФ",
+              "presentationUrl": "https://example.com/presentations/bim.pdf",
+              "joinUrl": "https://example.com/join/room2/session1"
+            },
+            {
+              "time": "13:00 – 13:45",
+              "topic": "Автоматизация расчётов",
+              "speaker": "Кузнецова Мария Андреевна",
+              "organization": "СметаСофт",
+              "presentationUrl": "https://example.com/presentations/automation.pdf",
+              "joinUrl": "https://example.com/join/room2/session2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "day2",
+      "name": "ЧАСТЬ 2",
+      "rooms": [
+        {
+          "id": "room3",
+          "title": "СМЕТНЫЕ НОРМАТИВЫ В КАПИТАЛЬНОМ СТРОИТЕЛЬСТВЕ",
+          "talks": [
+            {
+              "time": "10:00 – 11:00",
+              "topic": "СМЕТНЫЕ НОРМАТИВЫ В КАПИТАЛЬНОМ СТРОИТЕЛЬСТВЕ - Облачные технологии в стройке",
+              "speaker": "Гаврилов Роман Олегович",
+              "organization": "CloudBuild",
+              "presentationUrl": "https://example.com/presentations/cloud.pdf",
+              "joinUrl": "https://example.com/join/room3/session1"
+            }
+          ]
+        },
+        {
+          "id": "room4",
+          "title": "ПРАКТИЧЕСКИЕ ИНСТРУМЕНТЫ ПО ОПРЕДЕЛЕНИЮ СМЕТНОЙ СТОИМОСТИ",
+          "talks": [
+            {
+              "time": "10:00 – 11:00",
+              "topic": "Практические инструменты - Облачные технологии в стройке",
+              "speaker": "Гаврилов Роман Олегович",
+              "organization": "CloudBuild",
+              "presentationUrl": "https://example.com/presentations/cloud.pdf",
+              "joinUrl": "https://example.com/join/room4/session1"
+            }
+          ]
+        },
+        {
+          "id": "room5",
+          "title": "СМЕТНЫЕ НОРМАТИВЫ ПРОЕКТНО-ИЗЫСКАТЕЛЬСКИХ РАБОТ",
+          "talks": [
+            {
+              "time": "10:00 – 11:00",
+              "topic": "Сметные нормативы ПРОЕКТНО-ИЗЫСКАТЕЛЬСКИХ РАБОТ - Облачные технологии в стройке",
+              "speaker": "Гаврилов Роман Олегович",
+              "organization": "CloudBuild",
+              "presentationUrl": "https://example.com/presentations/cloud.pdf",
+              "joinUrl": "https://example.com/join/room5/session1"
+            }
+          ]
+        },
+        {
+          "id": "room6",
+          "title": "МАСТЕР-КЛАСС РАБОТЫ В ПРОГРАММНОМ КОМПЛЕКСЕ \"ГРАНД-СМЕТА\"",
+          "talks": [
+            {
+              "time": "10:00 – 11:00",
+              "topic": "Мастер-класс Облачные технологии в стройке",
+              "speaker": "Гаврилов Роман Олегович",
+              "organization": "CloudBuild",
+              "presentationUrl": "https://example.com/presentations/cloud.pdf",
+              "joinUrl": "https://example.com/join/room6/session1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

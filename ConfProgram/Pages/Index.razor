@@ -1,0 +1,31 @@
+﻿@page "/"
+@inject ConfProgram.Services.ConferenceService ConferenceService
+
+<div class="video-header">
+    <video autoplay muted loop playsinline>
+        <source src="videos/bg.mp4" type="video/mp4" />
+        Ваш браузер не поддерживает видео.
+    </video>
+
+    <div class="overlay">
+        <div class="header-text">
+            <h1>КОРПОРАТИВНАЯ КОНФЕРЕНЦИЯ</h1>
+            <h3>«ЦЕНООБРАЗОВАНИЕ И КАПИТАЛЬНОЕ СТРОИТЕЛЬСТВО — 2025»</h3>
+
+            <button class="btn btn-enter btn-lg mt-4 px-5 py-3" @onclick="EnterConference">
+                ВОЙТИ В КОНФЕРЕНЦИЮ
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private void EnterConference()
+    {
+        Console.WriteLine("Кнопка нажата");
+        NavigationManager.NavigateTo("/program");
+    }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+}

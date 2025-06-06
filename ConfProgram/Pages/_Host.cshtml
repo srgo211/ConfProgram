@@ -1,0 +1,33 @@
+﻿@page "/"
+@namespace ConfProgram.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ConfProgram</title>
+
+    <!-- Telerik тема -->
+    @* <link href="_content/Telerik.UI.for.Blazor/css/kendo-theme-bootstrap/all.css" rel="stylesheet" /> *@
+
+    <!-- Кастомные стили -->
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/themes/bootstrap-main.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="assets/css/styles.min.css" rel="stylesheet" />
+</head>
+<body class="k-body">
+<app>
+    <component type="typeof(App)" render-mode="ServerPrerendered" />
+</app>
+
+
+
+<script src="_framework/blazor.server.js"></script>
+</body>
+</html>
