@@ -14,8 +14,11 @@
 
         @foreach (var part in ConferenceService.Data.Parts)
         {
-            <li class="dropdown">
-                <span>@part.Name</span>
+            <li class="dropdown">             
+
+                <a class="@GetActive($"/room/{part.Id}")" @onclick="@(() => NavigateTo($"/room/{part.Id}"))">@part.Name</a>
+
+
                 <ul class="submenu">
                     @foreach (var room in part.Rooms)
                     {
