@@ -1,0 +1,163 @@
+﻿/* === Базовая структура страницы === */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #fff;
+    color: var(--color-black);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* === Главный layout-контейнер === */
+.page {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+/* === Боковая панель (sidebar) === */
+.sidebar {
+    width: 250px;
+    background-color: #212529;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow: visible;
+    z-index: 1000;
+    padding: 1rem 0;
+    transition: transform 0.3s ease;
+}
+
+    /* Скрытая панель */
+    .sidebar.hidden {
+        transform: translateX(-100%);
+    }
+
+    /* Показанная панель (на моб. или по клику) */
+    .sidebar.visible {
+        transform: translateX(0);
+    }
+
+/* === Основной контент справа от sidebar === */
+main {
+    margin-left: 250px;
+    flex: 1;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    transition: margin-left 0.3s ease;
+}
+
+/* Когда панель скрыта — контент растягивается */
+.sidebar.hidden + main {
+    margin-left: 0;
+}
+
+/* === Кнопка бургер-меню (для мобильных) === */
+.burger-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1100;
+    background-color: var(--color-yellow);
+    border: none;
+    padding: 0.5rem 0.75rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    border-radius: 6px;
+    display: none;
+}
+
+/* === Адаптивное поведение === */
+@media (max-width: 768px) {
+    .burger-toggle {
+        display: block;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+        .sidebar.visible {
+            transform: translateX(0);
+        }
+
+    main {
+        margin-left: 0;
+    }
+}
+
+/* === Навигационное меню (внутри sidebar) === */
+.menu {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+    .menu li {
+        position: relative;
+        padding: 6px 16px;
+    }
+
+        /* Ссылки и заголовки пунктов меню */
+        .menu li > a,
+        .menu li > span {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            display: block;
+            transition: background 0.3s ease;
+        }
+
+            /* Подсветка при наведении */
+            .menu li > a:hover,
+            .menu li > span:hover {
+                background-color: #495057;
+                color: var(--color-yellow);
+            }
+
+/* === Выпадающее подменю (список комнат) === */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    min-width: 180px;
+    background-color: #343a40;
+    z-index: 1001;
+    white-space: nowrap;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Показывать подменю при наведении на родительский пункт */
+.dropdown:hover .submenu {
+    display: block;
+}
+
+/* Элементы подменю */
+.submenu li {
+    padding: 6px 10px;
+}
+
+    /* Ссылки в подменю */
+    .submenu li a {
+        color: white;
+        display: block;
+        transition: background 0.3s ease;
+    }
+
+        /* Подсветка при наведении на комнату */
+        .submenu li a:hover {
+            background-color: #ffc10733; /* светло-жёлтый фон */
+            color: var(--color-yellow);
+        }
+
+        /* Подсветка текущей (активной) комнаты */
+        .submenu li a.active {
+            background-color: var(--color-yellow);
+            color: var(--color-black);
+            font-weight: bold;
+        }

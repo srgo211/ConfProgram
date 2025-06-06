@@ -4,25 +4,25 @@
 <div class="sidebar p-3 text-white bg-dark">
     <h5 class="mb-3">Навигация</h5>
 
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link text-white" @onclick="@(() => NavigateTo("/"))">Главная</a>
+    <ul class="menu">
+        <li>
+            <a class="@GetActive("/")" @onclick="@(() => NavigateTo("/"))">Главная</a>
         </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-white" @onclick="@(() => NavigateTo("/program"))">Программа</a>
+        <li>
+            <a class="@GetActive("/program")" @onclick="@(() => NavigateTo("/program"))">Программа</a>
         </li>
 
         @foreach (var part in ConferenceService.Data.Parts)
         {
-            <li class="nav-item ms-2 mt-2">
-                <span class="fw-bold">@part.Name</span>
-                <ul class="nav flex-column ms-3">
+            <li class="dropdown">
+                <span>@part.Name</span>
+                <ul class="submenu">
                     @foreach (var room in part.Rooms)
                     {
-                        <li class="nav-item">
-                            <a class="nav-link text-white"
-                               @onclick="@(() => NavigateTo($"/room/{part.Id}?room={room.Id}"))">
+                        var url = $"/room/{part.Id}?room={room.Id}";
+                        <li>
+                            <a class="@GetActive(url)"
+                               @onclick="@(() => NavigateTo(url))">
                                 @room.Title
                             </a>
                         </li>
@@ -34,9 +34,19 @@
 </div>
 
 @code {
-    private void NavigateTo(string url)
+    private async void NavigateTo(string url)
     {
         NavigationManager.NavigateTo(url);
+        await Task.Delay(10); // дать Blazor обновить URI
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private string GetActive(string href)
+    {
+        var current = NavigationManager.Uri;
+
+        // Match route ignoring domain part
+        return current.Contains(href, StringComparison.OrdinalIgnoreCase) ? "active" : "";
     }
 
     protected override async Task OnInitializedAsync()

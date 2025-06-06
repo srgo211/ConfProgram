@@ -1,0 +1,8 @@
+﻿/* === Цветовая палитра === */
+:root {
+    --color-black: #000000;
+    --color-yellow: #FFD200;
+    --color-orange: #F89728;
+    --color-red: #F30F21;
+    --color-rose: #D11242;
+}

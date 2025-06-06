@@ -1,0 +1,37 @@
+﻿/* === Страница Программа === */
+.program-background {
+    background-image: url('/images/bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.program-page h3,
+.program-page h4 {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.program-page table {
+    font-size: 1.1rem;
+}
+
+.program-page a {
+    font-weight: bold;
+}
+
+/* Кнопки */
+.btn-rosneft {
+    background-color: var(--color-yellow);
+    color: var(--color-black);
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-rosneft:hover {
+        background-color: var(--color-orange);
+        color: var(--color-black);
+    }
