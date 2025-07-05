@@ -21,7 +21,7 @@
     }  
     @foreach (var room in Rooms)
     {
-        <div class="p-1" style="flex: 0 0 50%; max-width: 50%;">
+        <div class="p-1 room-button-wrapper">
             <button class="btn btn-primary w-100 text-start text-wrap @(SelectedRoom?.Id == room.Id ? "active" : "")"
                     @onclick="() => OnRoomSelected.InvokeAsync(room)">
                 @room.Title

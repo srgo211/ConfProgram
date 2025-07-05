@@ -21,14 +21,22 @@ else
                           OnRoomSelected="HandleRoomSelected" />
             </div>
 
-            <!-- Правая колонка: таблица расписания -->
+            <!-- Правая колонка: таблица и/или аккордеон -->
             <div class="col-12 col-md-8">
                 @if (SelectedRoom is not null)
                 {
-                    <RoomScheduleTable Room="SelectedRoom" />
-                    <RoomScheduleTable2 Room="SelectedRoom" />
+                    <div class="d-none d-md-block">
+                        <!-- Только на >=768px -->
+                        <RoomScheduleTable Room="SelectedRoom" />
+                    </div>
+                    <div class="d-block d-md-none">
+                        <!-- Только на <768px -->
+                        <RoomScheduleTable2 Room="SelectedRoom" />
+                    </div>
                 }
             </div>
+
+          
         </div>
     </div>
 }

@@ -43,7 +43,42 @@
               "organization": "CloudBuild",
               "presentationUrl": "https://example.com/presentations/cloud.pdf",
               "joinUrl": "https://example.com/join/room3/session1"
+            },
+
+            {
+              "time": "11:00 – 12:00",
+              "topic": "Тема2",
+              "speaker": "Иванов Иван Иванович",
+              "organization": "CloudBuild",
+              "presentationUrl": "https://example.com/cloud.pdf",
+              "joinUrl": "https://example.com/join/room3/session1"
+            },
+
+            {
+              "time": "12:00 – 13:00",
+              "topic": "Обед"
+            },
+
+            {
+              "time": "13:00 – 14:00",
+              "topic": "Тема3",
+              "speaker": "Петров Петр Петрович",
+              "organization": "CloudBuild",
+              "presentationUrl": "https://example.com/cloud.pdf",
+              "joinUrl": "https://example.com/join/room3/session1"
+            },
+
+            {
+              "time": "14:00 – 15:00",
+              "topic": "Тема4",
+              "speaker": "Содоров Сидр Сидорович",
+              "organization": "CloudBuild",
+              "presentationUrl": "https://example.com/cloud.pdf",
+              "joinUrl": "https://example.com/join/room3/session1"
             }
+
+
+
           ]
         },
         {
