@@ -1,6 +1,7 @@
 ﻿@page "/room/{PartId}"
 @using Microsoft.AspNetCore.WebUtilities
 @using ConfProgram.Models
+@using ConfProgram.Components  @* если компоненты находятся в папке Components *@
 @inject NavigationManager NavigationManager
 @inject ConfProgram.Services.ConferenceService ConferenceService
 @implements IDisposable
@@ -11,56 +12,25 @@
 }
 else
 {
-    <h4 class="text-center mt-4" style="color: var(--color-orange);">
-        Комнаты для: @SelectedPart.Name
-    </h4>
+    <div class="container-fluid px-3">
+        <div class="row mt-3">
+            <!-- Левая колонка: список комнат -->
+            <div class="col-12 col-md-4 mb-3">
+                <RoomList Rooms="SelectedPart.Rooms"
+                          SelectedRoom="SelectedRoom"
+                          OnRoomSelected="HandleRoomSelected" />
+            </div>
 
-    <div class="d-flex justify-content-center flex-wrap">
-        @foreach (var room in SelectedPart.Rooms)
-        {
-            <button class="btn btn-rosneft-alt m-2 @(SelectedRoom?.Id == room.Id ? "active" : "")"
-                    @onclick="@(() => NavigateToRoom(room))">
-                @room.Title
-            </button>
-        }
-    </div>
-
-    @if (SelectedRoom is not null)
-    {
-        <h4 class="text-center mt-4" style="color: var(--color-orange);">
-            Программа комнаты: @SelectedRoom.Title
-        </h4>
-
-        <table class="table table-bordered mt-3 text-center table-striped rosneft-table">
-            <thead class="table-header">
-                <tr>
-                    <th>Время</th>
-                    <th>Тема</th>
-                    <th>Докладчик</th>
-                    <th>Организация</th>
-                    <th>Презентация</th>
-                    <th>Подключение</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var talk in SelectedRoom.Talks)
+            <!-- Правая колонка: таблица расписания -->
+            <div class="col-12 col-md-8">
+                @if (SelectedRoom is not null)
                 {
-                    <tr>
-                        <td>@talk.Time</td>
-                        <td>@talk.Topic</td>
-                        <td>@talk.Speaker</td>
-                        <td>@talk.Organization</td>
-                        <td>
-                            <a href="@talk.PresentationUrl" target="_blank">Скачать</a>
-                        </td>
-                        <td>
-                            <a href="@talk.JoinUrl" target="_blank">Перейти</a>
-                        </td>
-                    </tr>
+                    <RoomScheduleTable Room="SelectedRoom" />
+                    <RoomScheduleTable2 Room="SelectedRoom" />
                 }
-            </tbody>
-        </table>
-    }
+            </div>
+        </div>
+    </div>
 }
 
 @code {
@@ -87,12 +57,14 @@ else
         UpdateRoomFromQuery();
     }
 
+    private void HandleRoomSelected(ConferenceRoom room)
+    {
+        NavigateToRoom(room);
+    }
+
     private void NavigateToRoom(ConferenceRoom room)
     {
-        // Обновляем URL (без перезагрузки)
         NavigationManager.NavigateTo($"/room/{PartId}?room={room.Id}", replace: true);
-
-        // Обновляем состояние компонента вручную
         SelectedRoom = room;
         StateHasChanged();
     }

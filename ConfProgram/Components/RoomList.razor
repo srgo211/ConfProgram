@@ -1,0 +1,31 @@
+﻿@using ConfProgram.Models
+
+@code {
+    [Parameter]
+    public List<ConferenceRoom> Rooms { get; set; } = new();
+
+    [Parameter]
+    public ConferenceRoom? SelectedRoom { get; set; }
+
+    [Parameter]
+    public EventCallback<ConferenceRoom> OnRoomSelected { get; set; }
+}
+
+<h4 class="text-start" style="color: var(--color-orange);">Выберите комнату</h4>
+<div class="d-flex flex-wrap">
+
+    @if (Rooms?.Count == 1)
+    {
+        SelectedRoom = Rooms[0];
+      
+    }  
+    @foreach (var room in Rooms)
+    {
+        <div class="p-1" style="flex: 0 0 50%; max-width: 50%;">
+            <button class="btn btn-primary w-100 text-start text-wrap @(SelectedRoom?.Id == room.Id ? "active" : "")"
+                    @onclick="() => OnRoomSelected.InvokeAsync(room)">
+                @room.Title
+            </button>
+        </div>
+    }
+</div>

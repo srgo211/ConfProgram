@@ -1,0 +1,37 @@
+﻿<div class="accordion" id="talksAccordion">
+    @for (int i = 0; i < Room?.Talks?.Count; i++)
+    {
+        var talk = Room.Talks[i];
+        var collapseId = $"collapse{i}";
+        var headingId = $"heading{i}";
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="@headingId">
+                <button class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#@collapseId"
+                        aria-expanded="false"
+                        aria-controls="@collapseId">
+                    @talk.Time — @talk.Topic
+                </button>
+            </h2>
+            <div id="@collapseId"
+                 class="accordion-collapse collapse"
+                 aria-labelledby="@headingId"
+                 data-bs-parent="#talksAccordion">
+                <div class="accordion-body">
+                    <strong>Докладчик:</strong> @talk.Speaker <br />
+                    <strong>Организация:</strong> @talk.Organization <br />
+                    <a href="@talk.PresentationUrl" target="_blank">Презентация</a> |
+                    <a href="@talk.JoinUrl" target="_blank">Трансляция</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@* Параметр *@
+@code {
+    [Parameter]
+    public ConferenceRoom? Room { get; set; }
+}

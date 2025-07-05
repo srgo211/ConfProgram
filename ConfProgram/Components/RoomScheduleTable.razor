@@ -1,0 +1,43 @@
+﻿@using ConfProgram.Models
+@inherits LayoutComponentBase
+
+@* Параметр *@
+@code {
+    [Parameter]
+    public ConferenceRoom? Room { get; set; }
+}
+
+@if (Room is not null)
+{
+    <h4 class="text-start" style="color: var(--color-orange);">
+        Программа комнаты: @Room.Title
+    </h4>
+
+    <div class="table-responsive mt-2">
+        <table class="table table-bordered table-striped text-center rosneft-table">
+            <thead class="table-header">
+            <tr>
+                <th>Время</th>
+                <th>Тема</th>
+                <th>Докладчик</th>
+                <th>Организация</th>
+                <th>Презентация</th>
+                <th>Подключение</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var talk in Room.Talks)
+            {
+                <tr>
+                    <td>@talk.Time</td>
+                    <td>@talk.Topic</td>
+                    <td>@talk.Speaker</td>
+                    <td>@talk.Organization</td>
+                    <td><a href="@talk.PresentationUrl" target="_blank">Скачать</a></td>
+                    <td><a href="@talk.JoinUrl" target="_blank">Перейти</a></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

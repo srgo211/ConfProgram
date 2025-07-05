@@ -9,9 +9,9 @@ a,
     text-decoration: none;
 }
 
-    a:hover {
-        color: var(--color-red);
-    }
+a:hover {
+    color: var(--color-red);
+}
 
 h1:focus {
     outline: none;

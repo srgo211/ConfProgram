@@ -1,0 +1,14 @@
+﻿.btn-enter {
+    background-color: transparent; /* прозрачный фон */
+    color: #ffffff; /* белый текст */
+    border: 2px solid #ffffff; /* белая рамка */
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0.75rem 2rem; /* можно настроить под ваши отступы */
+    transition: all 0.3s ease;
+}
+
+.btn-enter:hover {
+    background-color: #ffffff; /* белый фон при наведении */
+    color: #000000; /* чёрный текст */
+}
