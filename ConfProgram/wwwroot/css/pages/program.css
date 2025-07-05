@@ -1,4 +1,6 @@
 ﻿/* === Страница Программа === */
+
+/* Фоновое изображение и отступы */
 .program-background {
     background-image: url('/images/bg.jpg');
     background-size: cover;
@@ -8,6 +10,7 @@
     padding: 2rem;
 }
 
+/* Заголовки */
 .program-page h3 {
     font-size: 3rem;
 }
@@ -16,15 +19,17 @@
     font-size: 2rem;
 }
 
+/* Таблицы */
 .program-page table {
     font-size: 1.1rem;
 }
 
+/* Ссылки */
 .program-page a {
     font-weight: bold;
 }
 
-/* Кнопки */
+/* Кнопки — фирменный стиль Роснефть */
 .btn-rosneft {
     background-color: var(--color-yellow);
     color: var(--color-black);
@@ -33,13 +38,93 @@
     transition: background-color 0.3s ease;
 }
 
-.btn-rosneft:hover {
-    background-color: var(--color-orange);
-    color: var(--color-black);
+    .btn-rosneft:hover {
+        background-color: var(--color-orange);
+        color: var(--color-black);
+    }
+
+/* === Карточки выбора части === */
+
+/* Контейнер карточек — горизонтальное размещение с отступами */
+.part-card-container {
+    justify-content: center;
 }
 
+/* Карточка — контейнер с изображением и наложением */
+.part-card {
+    position: relative;
+    width: 280px;
+    height: 180px;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
 
-/* Адаптация под мобильные устройства */
+    /* Эффект масштабирования при наведении */
+    .part-card:hover {
+        transform: scale(1.03);
+    }
+
+/* Изображение в карточке */
+.part-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: filter 0.3s ease;
+}
+
+/* Полупрозрачное затемнение при наведении */
+.part-card-darken {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.part-card:hover .part-card-darken {
+    opacity: 1;
+}
+
+/* Тёмный градиент для текста на фоне */
+.part-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0));
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 1rem;
+    transition: background 0.3s ease;
+    z-index: 2;
+}
+
+/* Подпись карточки */
+.part-card-title {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Изменение цвета и свечения текста при наведении */
+.part-card:hover .part-card-title {
+    color: var(--color-yellow); /* или используйте #ffeb3b */
+    text-shadow: 0 0 10px rgba(255, 235, 59, 0.9);
+}
+
+/* === Адаптация под мобильные устройства === */
 @media (max-width: 767px) {
     .program-page h3,
     .program-page h4 {
@@ -55,8 +140,8 @@
     .btn-rosneft {
         font-size: 1rem;
         padding: 0.6rem 1.2rem;
-        width: 100%; /* Растягивать кнопку на всю ширину */
-        max-width: 300px; /* Ограничим немного */
+        width: 100%;
+        max-width: 300px;
     }
 
     .d-flex.justify-content-center.flex-wrap {
@@ -67,5 +152,15 @@
     .program-page p,
     .program-page table {
         font-size: 0.95rem;
+    }
+
+    .part-card {
+        width: 100%;
+        max-width: 320px;
+        height: 160px;
+    }
+
+    .part-card-title {
+        font-size: 1rem;
     }
 }

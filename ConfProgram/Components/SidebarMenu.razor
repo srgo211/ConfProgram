@@ -1,31 +1,29 @@
 ﻿@inject NavigationManager NavigationManager
 @inject ConfProgram.Services.ConferenceService ConferenceService
 
-<div class="sidebar p-3 text-white bg-dark">
+<!-- Бургер-кнопка — видна всегда -->
+<button class="burger-button" @onclick="ToggleSidebar">
+    <span class="navbar-toggler-icon"></span>
+</button>
+
+<!-- Сайдбар -->
+<div class="sidebar @(isSidebarVisible ? "show" : "hide") p-3 text-white">
     <h5 class="mb-3">Навигация</h5>
 
     <ul class="menu">
-        <li>
-            <a class="@GetActive("/")" @onclick="@(() => NavigateTo("/"))">Главная</a>
-        </li>
-        <li>
-            <a class="@GetActive("/program")" @onclick="@(() => NavigateTo("/program"))">Программа</a>
-        </li>
+        <li><a class="@GetActive("/")" @onclick="@(() => NavigateTo("/"))">Главная</a></li>
+        <li><a class="@GetActive("/program")" @onclick="@(() => NavigateTo("/program"))">Программа</a></li>
 
         @foreach (var part in ConferenceService.Data.Parts)
         {
-            <li class="dropdown">             
-
+            <li class="dropdown">
                 <a class="@GetActive($"/room/{part.Id}")" @onclick="@(() => NavigateTo($"/room/{part.Id}"))">@part.Name</a>
-
-
                 <ul class="submenu">
                     @foreach (var room in part.Rooms)
                     {
                         var url = $"/room/{part.Id}?room={room.Id}";
                         <li>
-                            <a class="@GetActive(url)"
-                               @onclick="@(() => NavigateTo(url))">
+                            <a class="@GetActive(url)" @onclick="@(() => NavigateTo(url))">
                                 @room.Title
                             </a>
                         </li>
@@ -37,18 +35,23 @@
 </div>
 
 @code {
+    private bool isSidebarVisible = true;
+
+    private void ToggleSidebar()
+    {
+        isSidebarVisible = !isSidebarVisible;
+    }
+
     private async void NavigateTo(string url)
     {
         NavigationManager.NavigateTo(url);
-        await Task.Delay(10); // дать Blazor обновить URI
+        await Task.Delay(10);
         await InvokeAsync(StateHasChanged);
     }
 
     private string GetActive(string href)
     {
         var current = NavigationManager.Uri;
-
-        // Match route ignoring domain part
         return current.Contains(href, StringComparison.OrdinalIgnoreCase) ? "active" : "";
     }
 

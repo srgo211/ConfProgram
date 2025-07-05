@@ -5,7 +5,7 @@
 
 <div class="program-background program-page text-white">
 
-    <h3>Программа конференции</h3>
+    <h3 class="text-center">Программа конференции</h3>
 
     @if (ConferenceService.Data.Parts.Count == 0)
     {
@@ -13,15 +13,20 @@
     }
     else
     {
-        <h4>Выберите часть:</h4>
-        <div class="d-flex justify-content-center flex-wrap">
+       <h4 class="text-center mt-4">Выберите часть:</h4>
+
+        <div class="d-flex justify-content-center flex-wrap gap-4 mt-3 part-card-container">
             @foreach (var part in ConferenceService.Data.Parts)
             {
-                <button class="btn btn-rosneft m-2" @onclick="() => GoToPart(part.Id)">
-                    @part.Name
-                </button>
+                <div class="part-card" @onclick="() => GoToPart(part.Id)">                  
+                    <div class="part-card-overlay">
+                        <span class="part-card-title">@part.Name</span>
+                    </div>
+                    <img src="@GetPathImg(part.Id)" alt="@part.Name" class="part-card-image" />
+                </div>
             }
         </div>
+
     }
 </div>
 
@@ -30,6 +35,14 @@
     {
         NavigationManager.NavigateTo($"/room/{partId}");
     }
+
+    private string GetPathImg(string partId)
+    {
+
+        string pathImg = $"/images/{partId}.jpg";
+        return pathImg;
+    }
+
 
     protected override async Task OnInitializedAsync()
     {

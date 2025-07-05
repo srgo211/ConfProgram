@@ -13,16 +13,16 @@
 else
 {
     <div class="container-fluid px-3">
-        <div class="row mt-3">
+        <div class="row mt-3 gx-1">
             <!-- Левая колонка: список комнат -->
-            <div class="col-12 col-md-4 mb-3">
+            <div class="col-12 col-md-3 mb-3">
                 <RoomList Rooms="SelectedPart.Rooms"
                           SelectedRoom="SelectedRoom"
                           OnRoomSelected="HandleRoomSelected" />
             </div>
 
             <!-- Правая колонка: таблица и/или аккордеон -->
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-9">
                 @if (SelectedRoom is not null)
                 {
                     <div class="d-none d-md-block">

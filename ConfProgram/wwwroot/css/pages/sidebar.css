@@ -1,0 +1,88 @@
+﻿/* Контейнер сайдбара */
+.sidebar {
+    position: fixed; /* Фиксируем сбоку */
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #212529; /* Эквивалент Bootstrap bg-dark */
+    color: white;
+    z-index: 1040;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
+}
+
+    /* Скрытый сайдбар (выдвигается слева) */
+    .sidebar.hide {
+        transform: translateX(-100%);
+    }
+
+    /* Видимый сайдбар */
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+/* Стили кнопки-бургера */
+.burger-button {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1050;
+    background-color: #212529;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Иконка бургера — встроенный SVG */
+.navbar-toggler-icon {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255,255,255,0.7%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+/* Убираем отступы у body при использовании fixed-меню */
+body {
+    padding-left: 0;
+}
+
+/* (Опционально) стиль меню */
+.sidebar ul.menu {
+    list-style: none;
+    padding-left: 0;
+}
+
+    .sidebar ul.menu li {
+        margin-bottom: 0.5rem;
+    }
+
+    .sidebar ul.menu a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 0.4rem 0.6rem;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+    }
+
+        .sidebar ul.menu a:hover,
+        .sidebar ul.menu a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+/* Подменю */
+.sidebar ul.submenu {
+    padding-left: 1rem;
+    margin-top: 0.3rem;
+}
+
+    .sidebar ul.submenu li a {
+        font-size: 0.95rem;
+    }
