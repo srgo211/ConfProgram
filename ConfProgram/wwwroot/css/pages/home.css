@@ -1,22 +1,21 @@
 ﻿/* === Главная страница с видео === */
-
-
-
 .header-text {
     max-width: 90%;
+    text-align: center;
 }
 
-.header-text h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: var(--color-wite);
-}
+    .header-text h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--color-wite);
+    }
 
-.header-text h3 {
-    font-size: 1.4rem;
-    color: var(--color-wite);
-}
+    .header-text h3 {
+        font-size: 1.4rem;
+        color: var(--color-wite);
+    }
 
+/* Для больших экранов */
 @media (min-width: 768px) {
     .header-text h1 {
         font-size: 4.5rem;
@@ -26,3 +25,40 @@
         font-size: 2.5rem;
     }
 }
+
+/* Для мобильных */
+@media (max-width: 767px) {
+    .header-text h1 {
+        font-size: 1.6rem;
+        line-height: 1.2;
+    }
+
+    .header-text h3 {
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+
+    .btn-enter {
+        font-size: 1rem;
+        padding: 0.6rem 1rem;
+        width: 100%;
+    }
+}
+
+
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* центр по вертикали */
+    align-items: center; /* центр по горизонтали */
+    text-align: center;
+    padding: 1rem;
+}
+
+
