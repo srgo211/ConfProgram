@@ -3,37 +3,34 @@
 
 <PageTitle>ConfProgram</PageTitle>
 
-<div class="page d-flex">
-    <!-- Сайдбар с бургером -->
-    <SidebarMenu />
+<!-- Обёртка всей страницы: класс меняется в зависимости от состояния сайдбара -->
+<div class="page-layout">
+
+    <!-- Сайдбар с бургером, передаёт callback в layout -->
+    <SidebarMenu OnToggleSidebar="SetSidebarState" />
 
     <!-- Основной контент -->
-    <main class="flex-grow-1">
-        <div class="top-row px-4">
+    <main>
+        <div class="top-row">
             <div class="breadcrumb-wrapper">
                 <Breadcrumb />
             </div>
         </div>
 
-        <article class="content px-4">
+        <article class="content">
             @Body
         </article>
     </main>
 </div>
 
-@code
-{ 
-    private ConferencePart? SelectedPart;
-    private ConferenceRoom? SelectedRoom;
+@code {
+    // Состояние сайдбара
+    private bool isSidebarVisible = true;
 
-    private void SelectPart(ConferencePart part)
+    // Метод, вызываемый из SidebarMenu
+    public void SetSidebarState(bool visible)
     {
-        SelectedPart = part;
-        SelectedRoom = null;
-    }
-
-    private void SelectRoom(ConferenceRoom room)
-    {
-        SelectedRoom = room;
+        isSidebarVisible = visible;
+        StateHasChanged(); // гарантируем обновление разметки
     }
 }

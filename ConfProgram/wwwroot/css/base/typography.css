@@ -3,11 +3,6 @@ body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-a,
-.menu li a {
-    color: var(--color-orange);
-    text-decoration: none;
-}
 
 a:hover {
     color: var(--color-red);

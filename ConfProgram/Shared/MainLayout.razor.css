@@ -1,37 +1,48 @@
-.page {
+﻿/* === Общий контейнер страницы === */
+.page-layout {
     display: flex;
     flex-direction: row;
-    overflow: visible;
     position: relative;
+    min-height: 100vh;
 }
 
+/* === Основная область контента === */
 main {
-    flex: 1;
+    flex: 1; /* Занимает всё оставшееся пространство */
+    margin-left: 0; /* 🔥 Убрали лишний отступ, т.к. sidebar фиксирован */
+    padding: 1rem;
+    background-color: #f8f9fa;
+    transition: none; /* Отключили анимацию сдвига */
 }
 
-.sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
-}
-
+/* === Верхняя полоса — хлебные крошки, панель навигации === */
 .top-row {
     background-color: #f7f7f7;
     border-bottom: 1px solid #d6d5d5;
-    justify-content: flex-end;
     height: 3.5rem;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    padding: 0 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
-    .top-row ::deep a, .top-row .btn-link {
+    /* === Ссылки в верхней панели === */
+    .top-row a,
+    .top-row .btn-link {
         white-space: nowrap;
         margin-left: 1.5rem;
     }
 
-    .top-row a:first-child {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+        /* Первое по порядку — может быть логотипом или названием */
+        .top-row a:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
+/* === Мобильная адаптация: скрыть панель навигации, если нужно === */
 @media (max-width: 640.98px) {
     .top-row:not(.auth) {
         display: none;
@@ -41,31 +52,8 @@ main {
         justify-content: space-between;
     }
 
-    .top-row a, .top-row .btn-link {
+    .top-row a,
+    .top-row .btn-link {
         margin-left: 0;
-    }
-}
-
-@media (min-width: 641px) {
-    .page {
-        flex-direction: row;
-    }
-
-    .sidebar {
-        width: 250px;
-        height: 100vh;
-        position: sticky;
-        top: 0;
-    }
-
-    .top-row {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-    }
-
-    .top-row, article {
-        padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
     }
 }

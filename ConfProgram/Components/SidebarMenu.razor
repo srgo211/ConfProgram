@@ -1,29 +1,38 @@
 ﻿@inject NavigationManager NavigationManager
 @inject ConfProgram.Services.ConferenceService ConferenceService
 
-<!-- Бургер-кнопка — видна всегда -->
-<button class="burger-button" @onclick="ToggleSidebar">
+<!-- Кнопка-бургер -->
+<button type="button" class="burger-button" @onclick="ToggleSidebar">
     <span class="navbar-toggler-icon"></span>
 </button>
 
 <!-- Сайдбар -->
-<div class="sidebar @(isSidebarVisible ? "show" : "hide") p-3 text-white">
+<div class="sidebar @(isSidebarVisible ? "show" : "") p-3 text-white bg-dark">
     <h5 class="mb-3">Навигация</h5>
 
     <ul class="menu">
-        <li><a class="@GetActive("/")" @onclick="@(() => NavigateTo("/"))">Главная</a></li>
-        <li><a class="@GetActive("/program")" @onclick="@(() => NavigateTo("/program"))">Программа</a></li>
+        <li>
+            <a class="@GetActive("/")" @onclick="@(() => NavigateTo("/"))">Главная</a>
+        </li>
+        <li>
+            <a class="@GetActive("/program")" @onclick="@(() => NavigateTo("/program"))">Программа</a>
+        </li>
 
         @foreach (var part in ConferenceService.Data.Parts)
         {
             <li class="dropdown">
-                <a class="@GetActive($"/room/{part.Id}")" @onclick="@(() => NavigateTo($"/room/{part.Id}"))">@part.Name</a>
+                <a class="@GetActive($"/room/{part.Id}")"
+                   @onclick="@(() => NavigateTo($"/room/{part.Id}"))">
+                    @part.Name
+                </a>
+
                 <ul class="submenu">
                     @foreach (var room in part.Rooms)
                     {
                         var url = $"/room/{part.Id}?room={room.Id}";
                         <li>
-                            <a class="@GetActive(url)" @onclick="@(() => NavigateTo(url))">
+                            <a class="@GetActive(url)"
+                               @onclick="@(() => NavigateTo(url))">
                                 @room.Title
                             </a>
                         </li>
@@ -35,24 +44,29 @@
 </div>
 
 @code {
-    private bool isSidebarVisible = true;
+    private bool isSidebarVisible = false;
 
-    private void ToggleSidebar()
+    [Parameter]
+    public EventCallback<bool> OnToggleSidebar { get; set; }
+
+    private async void ToggleSidebar()
     {
         isSidebarVisible = !isSidebarVisible;
+        await OnToggleSidebar.InvokeAsync(isSidebarVisible);
     }
 
     private async void NavigateTo(string url)
     {
         NavigationManager.NavigateTo(url);
-        await Task.Delay(10);
+        await Task.Yield();
         await InvokeAsync(StateHasChanged);
     }
 
     private string GetActive(string href)
     {
         var current = NavigationManager.Uri;
-        return current.Contains(href, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+        var uri = new Uri(current);
+        return uri.AbsolutePath.Equals(href, StringComparison.OrdinalIgnoreCase) ? "active" : "";
     }
 
     protected override async Task OnInitializedAsync()
