@@ -12,11 +12,18 @@
     transition: transform 0.3s ease;
     transform: translateX(-100%);
     box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
+    overflow: visible;
 }
 
-    .sidebar.show {
-        transform: translateX(0);
-    }
+.sidebar.show {
+    transform: translateX(0);
+}
+
+
+.sidebar h5
+{
+    margin-top: 3.5rem;
+}
 
 /* === БУРГЕР === */
 .burger-button {
@@ -49,35 +56,60 @@
     margin: 0;
 }
 
-    .sidebar ul.menu li {
-        margin-bottom: 0.5rem;
-        overflow: visible;
-    }
+.sidebar ul.menu li {
+    margin-bottom: 0.5rem;
+    overflow: visible;
+}
 
-    .sidebar ul.menu a {
-        color: var(--color-orange);
-        text-decoration: none;
-        display: block;
-        padding: 0.4rem 0.6rem;
-        border-radius: 4px;
-        transition: background-color 0.2s ease;
-    }
+.sidebar ul.menu a {
+    color: var(--color-orange);
+    text-decoration: none;
+    display: block;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
 
-        .sidebar ul.menu a:hover,
-        .sidebar ul.menu a.active {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
+.sidebar ul.menu a:hover,
+.sidebar ul.menu a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
 
 /* === ПОДМЕНЮ === */
 .sidebar ul.submenu {
-    padding-left: 1rem;
-    margin-top: 0.3rem;
-    max-height: 300px;
-    overflow-y: auto;
-    position: relative;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background-color: #212529;
+    padding: 0.3rem 0;
+    min-width: 200px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
     z-index: 1050;
+    border-radius: 4px;
 }
 
     .sidebar ul.submenu li a {
         font-size: 0.95rem;
     }
+
+/* ✅ ПОКАЗ ПОДМЕНЮ ПРИ НАВЕДЕНИИ */
+.sidebar li.dropdown:hover > ul.submenu {
+    display: block;
+}
+
+/* === НА МОБИЛЬНЫХ — подменю открывается вниз === */
+@media (max-width: 767.98px) {
+    .sidebar ul.submenu {
+        position: static; /* ⛔ отменяем absolute */
+        display: none; /* скрыто по умолчанию */
+        padding-left: 1rem;
+        background-color: transparent;
+        box-shadow: none;
+        min-width: 0;
+    }
+
+    .sidebar li.dropdown:hover > ul.submenu {
+        display: block; /* Показываем подменю при наведении */
+    }
+}
