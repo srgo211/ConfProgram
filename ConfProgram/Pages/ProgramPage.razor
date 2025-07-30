@@ -2,35 +2,56 @@
 @using ConfProgram.Models
 @inject ConfProgram.Services.ConferenceService ConferenceService
 @inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.WebUtilities
+@using ConfProgram.Components  @* если компоненты находятся в папке Components *@
+@inject ConfProgram.Services.ConferenceService ConferenceService
 
 <div class="program-background program-page text-white">
 
     <h3 class="text-center">Программа конференции</h3>
 
-    @if (ConferenceService.Data.Parts.Count == 0)
+    @if (ConferenceService.Data.Rooms.Count == 0)
     {
         <p class="text-center text-muted"><em>Данные не загружены.</em></p>
     }
     else
     {
-       <h4 class="text-center mt-4">Выберите часть:</h4>
+       <h4 class="text-center mt-4">Выберите комнату:</h4>
 
-        <div class="d-flex justify-content-center flex-wrap gap-4 mt-3 part-card-container">
-            @foreach (var part in ConferenceService.Data.Parts)
-            {
-                <div class="part-card" @onclick="() => GoToPart(part.Id)">                  
-                    <div class="part-card-overlay">
-                        <span class="part-card-title">@part.Name</span>
+         <div class="container-fluid px-3">
+        <div class="row mt-3 gx-1">
+            <!-- Левая колонка: список комнат -->
+            <div class="col-12 col-md-3 mb-3">
+                <RoomList Rooms="ConferenceService.Data.Rooms"
+                          SelectedRoom="SelectedRoom"
+                          OnRoomSelected="HandleRoomSelected" />
+            </div>
+
+            <!-- Правая колонка: таблица и/или аккордеон -->
+            <div class="col-12 col-md-9">
+                @if (SelectedRoom is not null)
+                {
+                    <div class="d-none d-md-block">
+                        <!-- Только на >=768px -->
+                        <RoomScheduleTable Room="SelectedRoom" />
                     </div>
-                    <img src="@GetPathImg(part.Id)" alt="@part.Name" class="part-card-image" />
-                </div>
-            }
+                    <div class="d-block d-md-none">
+                        <!-- Только на <768px -->
+                        <RoomScheduleTable2 Room="SelectedRoom" />
+                    </div>
+                }
+            </div>
+
+          
         </div>
+    </div> 
 
     }
 </div>
 
 @code {
+     private ConferenceRoom? SelectedRoom;
+
     private void GoToPart(string partId)
     {
         NavigationManager.NavigateTo($"/room/{partId}");
@@ -46,9 +67,20 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (ConferenceService.Data.Parts.Count == 0)
+        if (ConferenceService.Data.Rooms.Count == 0)
         {
             await ConferenceService.LoadDataAsync();
         }
+    }
+
+
+     private void HandleRoomSelected(ConferenceRoom room)
+    {
+        NavigateToRoom(room);
+    }
+
+    private void NavigateToRoom(ConferenceRoom room)
+    {
+        NavigationManager.NavigateTo($"/room/{room.Id}", replace: true);
     }
 }

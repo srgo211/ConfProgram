@@ -3,30 +3,20 @@
 /// <summary>Полные данные всей конференции.</summary>
 public class ConferenceData
 {
-    /// <summary>Список всех дней конференции.</summary>
-    public List<ConferencePart> Parts { get; set; } = [];
-}
-
-/// <summary>День конференции (например, "День 1").</summary>
-public class ConferencePart
-{
-    /// <summary>Идентификатор дня (например, "day1").</summary>
-    public string Id { get; set; } = string.Empty;
-
-    /// <summary>Название дня (например, "День 1").</summary>
-    public string Name { get; set; } = string.Empty;
-
-    /// <summary>Список комнат/потоков в рамках дня.</summary>
+    /// <summary>Список всех комнат</summary>
     public List<ConferenceRoom> Rooms { get; set; } = [];
 }
 
 /// <summary>Комната или поток в рамках дня.</summary>
 public class ConferenceRoom
 {
-    /// <summary>Идентификатор комнаты (например, "room1").</summary>
+    /// <summary>Идентификатор комнаты (например, "room1")</summary>
     public string Id { get; set; } = string.Empty;
 
-    /// <summary>Название комнаты (например, "СМЕТНЫЕ НОРМАТИВЫ...").</summary>
+    /// <summary>Ссылка на подключение к конференции</summary>
+    public string JoinUrl { get; set; } = string.Empty;
+
+    /// <summary>Название комнаты (например, "СМЕТНЫЕ НОРМАТИВЫ...")</summary>
     public string Title { get; set; } = string.Empty;
 
     /// <summary>Список докладов в комнате.</summary>
@@ -51,6 +41,5 @@ public class ConferenceTalk
     /// <summary>Ссылка на презентацию (PDF, PPT и т.п.).</summary>
     public string PresentationUrl { get; set; } = string.Empty;
 
-    /// <summary>Ссылка на подключение к конференции.</summary>
-    public string JoinUrl { get; set; } = string.Empty;
+  
 }

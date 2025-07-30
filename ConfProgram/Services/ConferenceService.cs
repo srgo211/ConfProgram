@@ -39,10 +39,10 @@ public class ConferenceService
                 PropertyNameCaseInsensitive = true
             });
 
-            if (data?.Parts?.Any() == true)
+            if (data?.Rooms?.Any() == true)
             {
                 Data = data;
-                Console.WriteLine($"✅ Данные конференции успешно загружены. Дней: {Data.Parts.Count}");
+                Console.WriteLine($"✅ Данные конференции успешно загружены. Комнат: {Data.Rooms.Count}");
                 return true;
             }
             else
@@ -69,34 +69,30 @@ public class ConferenceService
     {
         return new ConferenceData
         {
-            Parts = new List<ConferencePart>
+           
+            Rooms = new List<ConferenceRoom>
             {
-                new ConferencePart
+                new ConferenceRoom
                 {
-                    Id = "day1",
-                    Name = "Часть 1",
-                    Rooms = new List<ConferenceRoom>
+                    Id = "room1",
+                    Title = "Тестовая Комната",
+                    JoinUrl = "https://example.com/join",
+                    Talks = new List<ConferenceTalk>
                     {
-                        new ConferenceRoom
+                        new ConferenceTalk
                         {
-                            Id = "room1",
-                            Title = "Тестовая Комната",
-                            Talks = new List<ConferenceTalk>
-                            {
-                                new ConferenceTalk
-                                {
-                                    Time = "10:00 – 10:30",
-                                    Topic = "Тестовая тема",
-                                    Speaker = "Тестов Тест",
-                                    Organization = "ТестОрг",
-                                    PresentationUrl = "https://example.com/test.pdf",
-                                    JoinUrl = "https://example.com/join"
-                                }
-                            }
+                            Time = "10:00 – 10:30",
+                            Topic = "Тестовая тема",
+                            Speaker = "Тестов Тест",
+                            Organization = "ТестОрг",
+                            PresentationUrl = "https://example.com/test.pdf",
+                                   
                         }
                     }
                 }
             }
+                
+            
         };
     }
 }

@@ -14,25 +14,20 @@
         <li>
             <a class="@GetActive("/")" @onclick="@(() => NavigateTo("/"))">Главная</a>
         </li>
-        <li>
+       @*  <li>
             <a class="@GetActive("/program")" @onclick="@(() => NavigateTo("/program"))">Программа</a>
-        </li>
+        </li> *@
 
-        @foreach (var part in ConferenceService.Data.Parts)
+        @if (ConferenceService.Data?.Rooms is not null && ConferenceService.Data.Rooms.Any())
         {
             <li class="dropdown">
-                <a class="@GetActive($"/room/{part.Id}")"
-                   @onclick="@(() => NavigateTo($"/room/{part.Id}"))">
-                    @part.Name
-                </a>
-
+                <a href="#" class="dropdown-toggle">Комнаты</a>
                 <ul class="submenu">
-                    @foreach (var room in part.Rooms)
+                    @foreach (var room in ConferenceService.Data.Rooms)
                     {
-                        var url = $"/room/{part.Id}?room={room.Id}";
+                        var url = $"/room/{room.Id}";
                         <li>
-                            <a class="@GetActive(url)"
-                               @onclick="@(() => NavigateTo(url))">
+                            <a class="@GetActive(url)" @onclick="@(() => NavigateTo(url))">
                                 @room.Title
                             </a>
                         </li>
@@ -40,6 +35,7 @@
                 </ul>
             </li>
         }
+        
     </ul>
 </div>
 
@@ -71,7 +67,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (ConferenceService.Data.Parts.Count == 0)
+        if (ConferenceService.Data.Rooms.Count == 0)
         {
             await ConferenceService.LoadDataAsync();
         }

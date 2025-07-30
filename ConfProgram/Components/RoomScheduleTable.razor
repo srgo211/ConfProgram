@@ -13,6 +13,12 @@
         Программа комнаты: @Room.Title
     </h4>
 
+    <div class="mb-3">
+        <a href="@Room.JoinUrl" target="_blank" class="btn btn-success btn-lg">
+            🔗 Подключиться к комнате
+        </a>
+    </div>
+
     <div class="table-responsive pt-1">
         <table class="table table-bordered table-striped text-center rosneft-table">
             <thead class="table-header">
@@ -34,7 +40,7 @@
                     <td>@talk.Speaker</td>
                     <td>@talk.Organization</td>
                     <td><a href="@talk.PresentationUrl" target="_blank">Скачать</a></td>
-                    <td><a href="@talk.JoinUrl" target="_blank">Перейти</a></td>
+                    
                 </tr>
             }
             </tbody>

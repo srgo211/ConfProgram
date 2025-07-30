@@ -1,22 +1,22 @@
-﻿@page "/room/{PartId}"
+﻿@page "/room/{RoomId}"
 @using Microsoft.AspNetCore.WebUtilities
 @using ConfProgram.Models
 @using ConfProgram.Components  @* если компоненты находятся в папке Components *@
 @inject NavigationManager NavigationManager
 @inject ConfProgram.Services.ConferenceService ConferenceService
-@implements IDisposable
 
-@if (SelectedPart is null)
+
+@if (SelectedRoom is null)
 {
-    <p class="text-muted">Часть не найдена.</p>
+    <p class="text-muted">Комната не найдена.</p>
 }
 else
 {
-    <div class="container-fluid px-3">
-        <div class="row mt-3 gx-1">
+    <div class="container-fluid px-3 mt-5">
+        <div class="row mt-5 gx-1">
             <!-- Левая колонка: список комнат -->
             <div class="col-12 col-md-3 mb-3">
-                <RoomList Rooms="SelectedPart.Rooms"
+                <RoomList Rooms="ConferenceService.Data.Rooms"
                           SelectedRoom="SelectedRoom"
                           OnRoomSelected="HandleRoomSelected" />
             </div>
@@ -38,30 +38,29 @@ else
 
           
         </div>
-    </div>
+    </div> 
 }
 
 @code {
     [Parameter]
-    public string? PartId { get; set; }
+    public string? RoomId { get; set; }
 
-    private ConferencePart? SelectedPart;
     private ConferenceRoom? SelectedRoom;
 
     protected override async Task OnInitializedAsync()
     {
         NavigationManager.LocationChanged += OnLocationChanged;
 
-        if (ConferenceService.Data.Parts.Count == 0)
+        if (ConferenceService.Data.Rooms.Count == 0)
             await ConferenceService.LoadDataAsync();
 
-        SelectedPart = ConferenceService.Data.Parts.FirstOrDefault(p => p.Id == PartId);
+        SelectedRoom = ConferenceService.Data.Rooms.FirstOrDefault(p => p.Id == RoomId);
         UpdateRoomFromQuery();
     }
 
     protected override void OnParametersSet()
     {
-        SelectedPart = ConferenceService.Data.Parts.FirstOrDefault(p => p.Id == PartId);
+        SelectedRoom = ConferenceService.Data.Rooms.FirstOrDefault(p => p.Id == RoomId);
         UpdateRoomFromQuery();
     }
 
@@ -72,24 +71,17 @@ else
 
     private void NavigateToRoom(ConferenceRoom room)
     {
-        NavigationManager.NavigateTo($"/room/{PartId}?room={room.Id}", replace: true);
-        SelectedRoom = room;
-        StateHasChanged();
+        NavigationManager.NavigateTo($"/room/{room.Id}", replace: true);
     }
 
     private void UpdateRoomFromQuery()
     {
-        if (SelectedPart is null)
-            return;
-
         var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
         if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("room", out var roomId))
         {
-            SelectedRoom = SelectedPart.Rooms.FirstOrDefault(r => r.Id == roomId);
-        }
-        else
-        {
-            SelectedRoom = null;
+            var room = ConferenceService.Data.Rooms.FirstOrDefault(r => r.Id == roomId);
+            if (room is not null)
+                SelectedRoom = room;
         }
     }
 
