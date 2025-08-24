@@ -23,7 +23,7 @@
     },
     {
       "id": "2",
-      "title": "СМЕТНЫЕ НОРМАТИВЫ В КАПИТАЛЬНОМ СТРОИТЕЛЬСТВЕ",
+      "title": "СМЕТНЫЕ НОРМАТИВЫ В КАПИТАЛЬНОМ СТРОИТЕЛЬСТВЕ-2",
       "joinUrl": "https://example.com/join/room3/session1",
       "talks": [
         {
@@ -62,7 +62,7 @@
     },
     {
       "id": "3",
-      "title": "ПРАКТИЧЕСКИЕ ИНСТРУМЕНТЫ ПО ОПРЕДЕЛЕНИЮ СМЕТНОЙ СТОИМОСТИ",
+      "title": "ПРАКТИЧЕСКИЕ ИНСТРУМЕНТЫ ПО ОПРЕДЕЛЕНИЮ СМЕТНОЙ СТОИМОСТИ-3",
       "joinUrl": "https://example.com/join/room4/session1",
       "talks": [
         {
@@ -73,35 +73,9 @@
           "presentationUrl": "https://example.com/presentations/cloud.pdf"
         }
       ]
-    },
-    {
-      "id": "4",
-      "title": "СМЕТНЫЕ НОРМАТИВЫ ПРОЕКТНО-ИЗЫСКАТЕЛЬСКИХ РАБОТ",
-      "joinUrl": "https://example.com/join/room5/session1",
-      "talks": [
-        {
-          "time": "10:00 – 11:00",
-          "topic": "Сметные нормативы ПРОЕКТНО-ИЗЫСКАТЕЛЬСКИХ РАБОТ - Облачные технологии в стройке",
-          "speaker": "Гаврилов Роман Олегович",
-          "organization": "CloudBuild",
-          "presentationUrl": "https://example.com/presentations/cloud.pdf"
-        }
-      ]
-    },
-    {
-      "id": "5",
-      "title": "МАСТЕР-КЛАСС РАБОТЫ В ПРОГРАММНОМ КОМПЛЕКСЕ \"ГРАНД-СМЕТА\"",
-      "joinUrl": "https://example.com/join/room6/session1",
-      "talks": [
-        {
-          "time": "10:00 – 11:00",
-          "topic": "Мастер-класс Облачные технологии в стройке",
-          "speaker": "Гаврилов Роман Олегович",
-          "organization": "CloudBuild",
-          "presentationUrl": "https://example.com/presentations/cloud.pdf"
-        }
-      ]
     }
+   
+   
   ]
 }
 
