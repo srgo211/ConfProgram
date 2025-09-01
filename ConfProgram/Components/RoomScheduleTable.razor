@@ -19,6 +19,45 @@
         </a>
     </div>
 
+    @* === Тактические направления === *@
+    @if (Room.TacticalGoals.Any())
+    {
+        <h5 class="mt-4">Тактические направления мероприятия:</h5>
+        <ul>
+            @foreach (var goal in Room.TacticalGoals)
+            {
+                <li>@goal</li>
+            }
+        </ul>
+    }
+
+    @* === Ожидаемые результаты === *@
+    @if (Room.ExpectedResults.Any())
+    {
+        <h5 class="mt-4">Ожидаемые результаты от мероприятия:</h5>
+        <ul>
+            @foreach (var result in Room.ExpectedResults)
+            {
+                <li>@result</li>
+            }
+        </ul>
+    }
+
+    @* === Практическое использование === *@
+    @if (Room.PracticalUse.Any())
+    {
+        <h5 class="mt-4">Практическое использование:</h5>
+        <ul>
+            @foreach (var usage in Room.PracticalUse)
+            {
+                <li>@usage</li>
+            }
+        </ul>
+    }
+
+
+
+
     <div class="table-responsive pt-1">
         <table class="table table-bordered table-striped text-center rosneft-table">
             <thead class="table-header">

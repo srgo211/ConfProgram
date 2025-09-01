@@ -26,9 +26,10 @@
                  aria-labelledby="@headingId"
                  data-bs-parent="#talksAccordion">
                 <div class="accordion-body">
-                    <strong>Докладчик:</strong> @talk.Speaker <br />
-                    <strong>Организация:</strong> @talk.Organization <br />
-                    <a href="@talk.PresentationUrl" target="_blank">Презентация</a> 
+
+                    @if (!String.IsNullOrWhiteSpace(@talk.Speaker)) {<strong>Докладчик:<br/></strong> @talk.Speaker <br/>}
+                    @if (!String.IsNullOrWhiteSpace(@talk.Organization)) {<strong>Организация:<br/></strong> @talk.Organization <br />}
+                    @if (!String.IsNullOrWhiteSpace(@talk.PresentationUrl)) {<a href="@talk.PresentationUrl" target="_blank">Презентация</a>} 
                    
                 </div>
             </div>
