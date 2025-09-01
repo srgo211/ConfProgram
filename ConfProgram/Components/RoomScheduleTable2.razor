@@ -15,6 +15,7 @@
                 🔗 Подключиться к комнате
             </a>
         </div>
+        <br />
 
         @* === Блок с информацией о комнате (новые поля) === *@
         @if ((Room.TacticalGoals?.Any() ?? false) ||
@@ -31,7 +32,7 @@
                             aria-controls="@infoCollapseId">
                         Информация о комнате
                     </button>
-                </h2>
+                </h2>              
                 <div id="@infoCollapseId"
                      class="accordion-collapse collapse"
                      aria-labelledby="@infoHeadingId"

@@ -24,22 +24,28 @@
     transition: background-color 0.2s ease-in-out;
 }
 
-    /* Наведение */
-    .btn-rosneft:hover,
-    .btn-rosneft:focus {
-        background-color: #FFD700; /* жёлтая при наведении */
-        color: #000;
-        border-color: #000;
-    }
+/* Наведение */
+.btn-rosneft:hover,
+.btn-rosneft:focus {
+    background-color: #FFD700; /* жёлтая при наведении */
+    color: #000;
+    border-color: #000;
+}
 
-    /* Активная кнопка (выбранная или при клике) */
-    .btn-rosneft.active,
-    .btn-rosneft:active {
-        background-color: #000; /* чёрная */
-        color: #FFD700; /* жёлтый текст */
-        border: 1px solid #000; /* чёрная рамка (чуть толще для выделения) */
-        box-shadow: none !important; /* убираем голубое свечение */
-        outline: none !important; /* убираем outline */
-    }
+/* Активная кнопка (выбранная или при клике) */
+.btn-rosneft.active,
+.btn-rosneft:active {
+    background-color: #000; /* чёрная */
+    color: #FFD700; /* жёлтый текст */
+    border: 1px solid #000; /* чёрная рамка (чуть толще для выделения) */
+    box-shadow: none !important; /* убираем голубое свечение */
+    outline: none !important; /* убираем outline */
+}
 
 
+
+/* Чуть выше по высоте поле сообщения */
+.feedback-textarea {
+    min-height: 140px;
+    resize: vertical;
+}

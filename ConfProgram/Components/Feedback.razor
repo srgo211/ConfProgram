@@ -1,0 +1,78 @@
+﻿@page "/feedback"
+@using System.ComponentModel.DataAnnotations
+@inject ConfProgram.Services.TelegramSender TelegramSender
+@inject ILogger<Feedback> Logger
+
+<div class="feedback">
+    <h4 style="color: var(--color-orange);">Обратная связь</h4>
+
+    @if (sent)
+    {
+        <div class="alert alert-success">Спасибо! Ваше сообщение отправлено.</div>
+    }
+    else
+    {
+        <EditForm Model="@form" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="mb-3">
+                <label for="name">Имя</label>
+                <InputText id="name" class="form-control" @bind-Value="form.Name" />
+                <ValidationMessage For="() => form.Name" />
+            </div>
+
+            <div class="mb-3">
+                <label for="email">Email</label>
+                <InputText id="email" type="email" class="form-control" @bind-Value="form.Email" />
+                <ValidationMessage For="() => form.Email" />
+            </div>
+
+            <div class="mb-3">
+                <label for="message">Сообщение</label>
+                <InputTextArea id="message" class="form-control feedback-textarea" @bind-Value="form.Message" />
+                <ValidationMessage For="() => form.Message" />
+            </div>
+
+            <button type="submit" class="btn btn-rosneft" disabled="@isSubmitting">
+                @(isSubmitting ? "Отправка..." : "Отправить")
+            </button>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private readonly FeedbackForm form = new();
+    private bool isSubmitting;
+    private bool sent;
+
+    private async Task HandleValidSubmit()
+    {
+        isSubmitting = true;
+        try
+        {
+            var text = $"<b>Обратная связь</b>\n" +
+                       $"<b>Имя:</b> {form.Name}\n" +
+                       $"<b>Email:</b> {form.Email}\n\n" +
+                       $"{form.Message}";
+
+            await TelegramSender.SendMessageAsync(text);
+            sent = true;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Ошибка отправки в Telegram");
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private sealed class FeedbackForm
+    {
+        [Required] public string Name { get; set; } = string.Empty;
+        [Required, EmailAddress] public string Email { get; set; } = string.Empty;
+        [Required, StringLength(4000, MinimumLength = 5)] public string Message { get; set; } = string.Empty;
+    }
+}

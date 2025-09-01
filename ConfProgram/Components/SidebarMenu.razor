@@ -35,6 +35,11 @@
                 </ul>
             </li>
         }
+
+        <!-- Новая кнопка "Обратная связь" -->
+        <li>
+            <a class="@GetActive("/feedback")" @onclick="@(() => NavigateTo("/feedback"))">Обратная связь</a>
+        </li>
         
     </ul>
 </div>
