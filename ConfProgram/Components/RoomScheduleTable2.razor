@@ -1,44 +1,187 @@
-﻿<div class="accordion" id="talksAccordion">
-    <div class="mb-2">
-        <a href="@Room.JoinUrl" target="_blank" class="btn btn-success btn-lg">
-            🔗 Подключиться к комнате
-        </a>
-    </div>
+﻿@using System.Globalization
 
-    @for (int i = 0; i < Room?.Talks?.Count; i++)
-    {
-        var talk = Room.Talks[i];
-        var collapseId = $"collapse{i}";
-        var headingId = $"heading{i}";
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="@headingId">
-                <button class="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#@collapseId"
-                        aria-expanded="false"
-                        aria-controls="@collapseId">
-                    @talk.Time — @talk.Topic
-                </button>
-            </h2>
-            <div id="@collapseId"
-                 class="accordion-collapse collapse"
-                 aria-labelledby="@headingId"
-                 data-bs-parent="#talksAccordion">
-                <div class="accordion-body">
+@if (Room is not null)
+{
+    var accordionId = $"talksAccordion-{Room.Id}";
+    var infoCollapseId = $"collapse-info-{Room.Id}";
+    var infoHeadingId = $"heading-info-{Room.Id}";
 
-                    @if (!String.IsNullOrWhiteSpace(@talk.Speaker)) {<strong>Докладчик:<br/></strong> @talk.Speaker <br/>}
-                    @if (!String.IsNullOrWhiteSpace(@talk.Organization)) {<strong>Организация:<br/></strong> @talk.Organization <br />}
-                    @if (!String.IsNullOrWhiteSpace(@talk.PresentationUrl)) {<a href="@talk.PresentationUrl" target="_blank">Презентация</a>} 
-                   
+    <div class="accordion" id="@accordionId">
+        <div class="mb-2">
+            <a href="@Room.JoinUrl"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="btn btn-success btn-lg w-100">
+                🔗 Подключиться к комнате
+            </a>
+        </div>
+
+        @* === Блок с информацией о комнате (новые поля) === *@
+        @if ((Room.TacticalGoals?.Any() ?? false) ||
+            (Room.ExpectedResults?.Any() ?? false) ||
+            (Room.PracticalUse?.Any() ?? false))
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="@infoHeadingId">
+                    <button class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#@infoCollapseId"
+                            aria-expanded="false"
+                            aria-controls="@infoCollapseId">
+                        Информация о комнате
+                    </button>
+                </h2>
+                <div id="@infoCollapseId"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="@infoHeadingId"
+                     data-bs-parent="#@accordionId">
+                    <div class="accordion-body text-start">
+                        @* Тактические направления *@
+                        @if (Room.TacticalGoals?.Any() ?? false)
+                        {
+                            <h6 class="fw-bold">Тактические направления:</h6>
+                            <ul class="mb-3">
+                                @foreach (var goal in Room.TacticalGoals!)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(goal))
+                                    {
+                                        <li>@goal</li>
+                                    }
+                                }
+                            </ul>
+                        }
+
+                        @* Ожидаемые результаты *@
+                        @if (Room.ExpectedResults?.Any() ?? false)
+                        {
+                            <h6 class="fw-bold">Ожидаемые результаты:</h6>
+                            <ul class="mb-3">
+                                @foreach (var result in Room.ExpectedResults!)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(result))
+                                    {
+                                        <li>@result</li>
+                                    }
+                                }
+                            </ul>
+                        }
+
+                        @* Практическое использование (пронумерованный список для читабельности) *@
+                        @if (Room.PracticalUse?.Any() ?? false)
+                        {
+                            <h6 class="fw-bold">Практическое использование:</h6>
+                            <ol class="mb-0">
+                                @foreach (var usage in Room.PracticalUse!)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(usage))
+                                    {
+                                        <li>@usage</li>
+                                    }
+                                }
+                            </ol>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
 
-@* Параметр *@
+        @* === Доклады (каждый пункт — отдельный элемент аккордеона) === *@
+        @for (var i = 0; i < (Room.Talks?.Count ?? 0); i++)
+        {
+            var talk = Room.Talks![i];
+            var collapseId = $"collapse-talk-{Room.Id}-{i}";
+            var headingId = $"heading-talk-{Room.Id}-{i}";
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="@headingId">
+                    <button class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#@collapseId"
+                            aria-expanded="false"
+                            aria-controls="@collapseId">
+                        @RenderTalkHeader(talk)
+                    </button>
+                </h2>
+                <div id="@collapseId"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="@headingId"
+                     data-bs-parent="#@accordionId">
+                    <div class="accordion-body text-start">
+
+                        @* Докладчик *@
+                        @if (!string.IsNullOrWhiteSpace(talk.Speaker))
+                        {
+                            <div class="mb-2">
+                                <div class="fw-bold">Докладчик</div>
+                                @RenderMultiline(talk.Speaker)
+                            </div>
+                        }
+
+                        @* Организация *@
+                        @if (!string.IsNullOrWhiteSpace(talk.Organization))
+                        {
+                            <div class="mb-2">
+                                <div class="fw-bold">Организация</div>
+                                @RenderMultiline(talk.Organization)
+                            </div>
+                        }
+
+                        @* Презентация *@
+                        @if (!string.IsNullOrWhiteSpace(talk.PresentationUrl))
+                        {
+                            <div class="mt-2">
+                                <a href="@talk.PresentationUrl"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
+                                    Презентация
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
 @code {
     [Parameter]
     public ConferenceRoom? Room { get; set; }
+
+    /// <summary>
+    /// Красиво формирует заголовок элемента аккордеона.
+    /// Если нет темы — показываем только время. Если нет времени — только тему.
+    /// </summary>
+    private static string RenderTalkHeader(ConferenceTalk talk)
+    {
+        var hasTime = !string.IsNullOrWhiteSpace(talk.Time);
+        var hasTopic = !string.IsNullOrWhiteSpace(talk.Topic);
+
+        return (hasTime, hasTopic) switch
+        {
+            (true, true) => $"{talk.Time} — {talk.Topic}",
+            (true, false) => talk.Time!,
+            (false, true) => talk.Topic!,
+            _ => "Без названия"
+        };
+    }
+
+    /// <summary>
+    /// Безопасно выводит многострочный текст (разделитель — \n) построчно в <div>.
+    /// Не используем сырой HTML, избегаем MarkupString для безопасности.
+    /// </summary>
+    private static RenderFragment RenderMultiline(string text) => builder =>
+    {
+        var seq = 0;
+        var lines = text.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        foreach (var line in lines)
+        {
+            builder.OpenElement(seq++, "div");
+            builder.AddContent(seq++, line);
+            builder.CloseElement();
+        }
+    };
 }
