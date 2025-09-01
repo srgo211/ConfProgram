@@ -1,0 +1,22 @@
+﻿/* === Ширины колонок таблицы конференций === */
+.rosneft-table .time-col {
+    width: 10%;
+    white-space: nowrap; /* чтобы время не переносилось */
+}
+
+.rosneft-table .topic-col {
+    width: 40%;
+}
+
+.rosneft-table .speaker-col {
+    width: 20%;
+}
+
+.rosneft-table .org-col {
+    width: 20%;
+}
+
+.rosneft-table .presentation-col {
+    width: 10%;
+    white-space: nowrap; /* чтобы ссылка не ломалась */
+}

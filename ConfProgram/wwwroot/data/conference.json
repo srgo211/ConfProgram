@@ -6,76 +6,57 @@
       "joinUrl": "https://example.com/join/room1/session1",
       "talks": [
         {
-          "time": "10:00 – 10:45",
-          "topic": "Смета1-Обзор нормативной базы",
-          "speaker": "Иванов Иван Иванович",
-          "organization": "Минстрой России",
+          "time": "09:55–10:00",
+          "topic": "Вступительное слово",
+          "speaker": "Ведущий",
+          "organization": "ООО «СамараНИПИнефть»",
           "presentationUrl": "https://example.com/presentations/normative.pdf"
         },
         {
-          "time": "11:00 – 11:45",
-          "topic": "Смета2 - Новые подходы к ценообразованию",
-          "speaker": "Петров Петр Петрович",
-          "organization": "ЦНИИЭС",
-          "presentationUrl": "https://example.com/presentations/pricing.pdf"
-        }
-      ]
-    },
-    {
-      "id": "2",
-      "title": "СМЕТНЫЕ НОРМАТИВЫ В КАПИТАЛЬНОМ СТРОИТЕЛЬСТВЕ-2",
-      "joinUrl": "https://example.com/join/room3/session1",
-      "talks": [
-        {
-          "time": "10:00 – 11:00",
-          "topic": "СМЕТНЫЕ НОРМАТИВЫ В КАПИТАЛЬНОМ СТРОИТЕЛЬСТВЕ - Облачные технологии в стройке",
-          "speaker": "Гаврилов Роман Олегович",
-          "organization": "CloudBuild",
-          "presentationUrl": "https://example.com/presentations/cloud.pdf"
+          "time": "10:00–10:20",
+          "topic": "Разработка, поиск и внедрение новых сметных норм в Компании",
+          "speaker": "",
+          "organization": "ООО «СамараНИПИнефть»",
+          "presentationUrl": ""
         },
         {
-          "time": "11:00 – 12:00",
-          "topic": "Тема2",
-          "speaker": "Иванов Иван Иванович",
-          "organization": "CloudBuild",
-          "presentationUrl": "https://example.com/cloud.pdf"
+          "time": "10:20 – 10:40",
+          "topic": "Разработка сметных норм на строительно-монтажные работы в ПАО «НК «Роснефть»",
+          "speaker": "Нашатыркина Наталья Юрьевна",
+          "organization": "СИЦО ООО «СамараНИПИнефть»",
+          "presentationUrl": ""
         },
         {
-          "time": "12:00 – 13:00",
-          "topic": "Обед"
+          "time": "10:40–11:00",
+          "topic": "Опыт практики проведения нормативных наблюдений СМР силами ОГ для целей разработки сметных норм",
+          "speaker": "Севрюков Антон Иванович\nБердников Максим Дмитриевич",
+          "organization": "СИЦО ООО «СамараНИПИнефть»",
+          "presentationUrl": ""
         },
         {
-          "time": "13:00 – 14:00",
-          "topic": "Тема3",
-          "speaker": "Петров Петр Петрович",
-          "organization": "CloudBuild",
-          "presentationUrl": "https://example.com/cloud.pdf"
+          "time": "11:00–11:10",
+          "topic": "ПЕРЕРЫВ"
         },
         {
-          "time": "14:00 – 15:00",
-          "topic": "Тема4",
-          "speaker": "Содоров Сидр Сидорович",
-          "organization": "CloudBuild",
-          "presentationUrl": "https://example.com/cloud.pdf"
-        }
-      ]
-    },
-    {
-      "id": "3",
-      "title": "ПРАКТИЧЕСКИЕ ИНСТРУМЕНТЫ ПО ОПРЕДЕЛЕНИЮ СМЕТНОЙ СТОИМОСТИ-3",
-      "joinUrl": "https://example.com/join/room4/session1",
-      "talks": [
+          "time": "11:10–11:30",
+          "topic": "Актуальная методика определения численности рабочих на стадии архитектурно-строительного проектирования",
+          "speaker": "Ярощук Людмила Александровна\nГатауллина Назия Кабировна",
+          "organization": "ООО «НК «Роснефть» – НТЦ\nООО «ЦЭПиТР»",
+          "presentationUrl": ""
+        },
         {
-          "time": "10:00 – 11:00",
-          "topic": "Практические инструменты - Облачные технологии в стройке",
-          "speaker": "Гаврилов Роман Олегович",
-          "organization": "CloudBuild",
-          "presentationUrl": "https://example.com/presentations/cloud.pdf"
+          "time": "11:30–11:50",
+          "topic": "Типовые ошибки при экспертизе сметной документации",
+          "speaker": "Гатауллина Назия Кабировна",
+          "organization": "ООО «ЦЭПиТР»",
+          "presentationUrl": ""
+        },
+        {
+          "time": "11:50–12:50",
+          "topic": "КРУГЛЫЙ СТОЛ",
+          "presentationUrl": ""
         }
       ]
     }
-   
-   
   ]
 }
-
