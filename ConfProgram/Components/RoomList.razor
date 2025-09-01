@@ -13,16 +13,14 @@
 
 <h4 class="text-start" style="color: var(--color-orange);">Выберите комнату</h4>
 <div class="d-flex flex-column">
-
     @if (Rooms?.Count == 1)
     {
         SelectedRoom = Rooms[0];
-      
-    }  
+    }
     @foreach (var room in Rooms)
     {
         <div class="p-1 room-button-wrapper">
-            <button class="btn btn-primary w-100 text-start text-wrap @(SelectedRoom?.Id == room.Id ? "active" : "")"
+            <button class="btn btn-rosneft w-100 text-start text-wrap @(SelectedRoom?.Id == room.Id ? "active" : "")"
                     @onclick="() => OnRoomSelected.InvokeAsync(room)">
                 @room.Title
             </button>
