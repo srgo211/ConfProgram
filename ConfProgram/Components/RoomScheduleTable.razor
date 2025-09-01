@@ -9,86 +9,121 @@
 
 @if (Room is not null)
 {
+    var infoAccordionId = $"roomInfoAccordion-{Room.Id}";
+    var infoHeadingId = $"roomInfoHeading-{Room.Id}";
+    var infoCollapseId = $"roomInfoCollapse-{Room.Id}";
+
     <h4 class="text-start" style="color: var(--color-orange);">
         Программа комнаты: @Room.Title
     </h4>
 
     <div class="mb-3">
-        <a href="@Room.JoinUrl" target="_blank" class="btn btn-success btn-lg">
+        <a href="@Room.JoinUrl" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-lg">
             🔗 Подключиться к комнате
         </a>
     </div>
 
-    @* === Тактические направления === *@
-    @if (Room.TacticalGoals.Any())
+    @* === Аккордеон с информацией о комнате (сворачиваемый блок) === *@
+    @if ((Room.TacticalGoals?.Any() ?? false) ||
+             (Room.ExpectedResults?.Any() ?? false) ||
+             (Room.PracticalUse?.Any() ?? false))
     {
-        <h5 class="mt-4">Тактические направления мероприятия:</h5>
-        <ul>
-            @foreach (var goal in Room.TacticalGoals)
-            {
-                <li>@goal</li>
-            }
-        </ul>
+        <div class="accordion mb-3" id="@infoAccordionId">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="@infoHeadingId">
+                    <button class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#@infoCollapseId"
+                            aria-expanded="false"
+                            aria-controls="@infoCollapseId">
+                        Информация о комнате
+                    </button>
+                </h2>
+                <div id="@infoCollapseId"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="@infoHeadingId"
+                     data-bs-parent="#@infoAccordionId">
+                    <div class="accordion-body text-start">
+
+                        @* Тактические направления *@
+                        @if (Room.TacticalGoals?.Any() ?? false)
+                        {
+                            <h5 class="mt-2">Тактические направления мероприятия:</h5>
+                            <ul class="mb-3">
+                                @foreach (var goal in Room.TacticalGoals!)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(goal))
+                                    {
+                                        <li>@goal</li>
+                                    }
+                                }
+                            </ul>
+                        }
+
+                        @* Ожидаемые результаты *@
+                        @if (Room.ExpectedResults?.Any() ?? false)
+                        {
+                            <h5 class="mt-2">Ожидаемые результаты от мероприятия:</h5>
+                            <ul class="mb-3">
+                                @foreach (var result in Room.ExpectedResults!)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(result))
+                                    {
+                                        <li>@result</li>
+                                    }
+                                }
+                            </ul>
+                        }
+
+                        @* Практическое использование *@
+                        @if (Room.PracticalUse?.Any() ?? false)
+                        {
+                            <h5 class="mt-2">Практическое использование:</h5>
+                            <ol class="mb-0">
+                                @foreach (var usage in Room.PracticalUse!)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(usage))
+                                    {
+                                        <li>@usage</li>
+                                    }
+                                }
+                            </ol>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
     }
-
-    @* === Ожидаемые результаты === *@
-    @if (Room.ExpectedResults.Any())
-    {
-        <h5 class="mt-4">Ожидаемые результаты от мероприятия:</h5>
-        <ul>
-            @foreach (var result in Room.ExpectedResults)
-            {
-                <li>@result</li>
-            }
-        </ul>
-    }
-
-    @* === Практическое использование === *@
-    @if (Room.PracticalUse.Any())
-    {
-        <h5 class="mt-4">Практическое использование:</h5>
-        <ul>
-            @foreach (var usage in Room.PracticalUse)
-            {
-                <li>@usage</li>
-            }
-        </ul>
-    }
-
-
-
 
     <div class="table-responsive pt-1">
         <table class="table table-bordered table-striped text-center rosneft-table">
             <thead class="table-header">
-            <tr>
+                <tr>
                     <th class="time-col">Время</th>
                     <th class="topic-col">Тема</th>
                     <th class="speaker-col">Докладчик</th>
                     <th class="org-col">Организация</th>
                     <th class="presentation-col">Презентация</th>
-               
-            </tr>
+                </tr>
             </thead>
             <tbody>
-            @foreach (var talk in Room.Talks)
-            {
-                <tr>
-                    <td class="time-col">@talk.Time</td>
-                    <td class="topic-col">@talk.Topic</td>
-                    <td class="speaker-col">@talk.Speaker</td>
-                    <td class="org-col">@talk.Organization</td>                   
-                    
-                   
-                    <td class="presentation-col">
-                        @if (!String.IsNullOrWhiteSpace(talk.PresentationUrl))
-                        {
-                            <a href="@talk.PresentationUrl" target="_blank">Скачать</a>
-                        }
-                    </td>
-                    
-                </tr>
-            }
+                @foreach (var talk in Room.Talks)
+                {
+                    <tr>
+                        <td class="time-col">@talk.Time</td>
+                        <td class="topic-col">@talk.Topic</td>
+                        <td class="speaker-col">@talk.Speaker</td>
+                        <td class="org-col">@talk.Organization</td>
+                        <td class="presentation-col">
+                            @if (!string.IsNullOrWhiteSpace(talk.PresentationUrl))
+                            {
+                                <a href="@talk.PresentationUrl" target="_blank" rel="noopener noreferrer">Скачать</a>
+                            }
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
