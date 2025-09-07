@@ -26,6 +26,9 @@ builder.Services.AddSingleton<ConferenceService>();
 builder.Services.Configure<TelegramOptions>(builder.Configuration.GetSection("Telegram"));
 builder.Services.AddHttpClient<TelegramSender>();
 
+// включаем раздачу статики
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+
 var app = builder.Build();
 
 // 2) ВАЖНО: принимаем форвардные заголовки ОТ ПРОКСИ

@@ -1,10 +1,13 @@
-﻿@using ConfProgram.Models
+﻿@using ConfProgram.Extensions
+@using ConfProgram.Models
 @inherits LayoutComponentBase
 
 @* Параметр *@
 @code {
     [Parameter]
     public ConferenceRoom? Room { get; set; }
+    
+
 }
 
 @if (Room is not null)
@@ -111,6 +114,7 @@
             <tbody>
                 @foreach (var talk in Room.Talks)
                 {
+                    var href = Link.HrefForPresentation(talk.PresentationUrl);
                     <tr>
                         <td class="time-col">@talk.Time</td>
                         <td class="topic-col">@talk.Topic</td>
@@ -119,7 +123,8 @@
                         <td class="presentation-col">
                             @if (!string.IsNullOrWhiteSpace(talk.PresentationUrl))
                             {
-                                <a href="@talk.PresentationUrl" target="_blank" rel="noopener noreferrer">Скачать</a>
+                                //<a href="@talk.PresentationUrl" target="_blank" rel="noopener noreferrer">Скачать</a>
+                                <a href="@href" target="_blank" rel="noopener noreferrer">Скачать</a>
                             }
                         </td>
                     </tr>

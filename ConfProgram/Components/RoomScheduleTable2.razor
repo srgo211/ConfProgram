@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using ConfProgram.Extensions
 
 @if (Room is not null)
 {
@@ -94,6 +95,8 @@
             var collapseId = $"collapse-talk-{Room.Id}-{i}";
             var headingId = $"heading-talk-{Room.Id}-{i}";
 
+            var href = Link.HrefForPresentation(talk.PresentationUrl);
+
             <div class="accordion-item">
                 <h2 class="accordion-header" id="@headingId">
                     <button class="accordion-button collapsed"
@@ -133,7 +136,7 @@
                         @if (!string.IsNullOrWhiteSpace(talk.PresentationUrl))
                         {
                             <div class="mt-2">
-                                <a href="@talk.PresentationUrl"
+                                <a href="@href"
                                    target="_blank"
                                    rel="noopener noreferrer">
                                     Презентация
@@ -185,4 +188,8 @@
             builder.CloseElement();
         }
     };
+
+
+  
+
 }
