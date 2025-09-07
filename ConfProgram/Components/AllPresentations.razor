@@ -1,5 +1,118 @@
-﻿<h3>AllPresentations</h3>
+﻿@using System.IO
+@using ConfProgram.Extensions
+@using ConfProgram.Models
+@inherits LayoutComponentBase
+@inject NavigationManager Nav
 
 @code {
-    
+    /// <summary>Входные данные конференции (комнаты, доклады).</summary>
+    [Parameter] public ConferenceData? Data { get; set; }
+
+    private sealed record PresentationItem(int Number, string Topic, string Url);
+    private List<PresentationItem> _items = [];
+
+    protected override void OnParametersSet()
+    {
+        _items = BuildItems(Data);
+    }
+
+    private static List<PresentationItem> BuildItems(ConferenceData? source)
+    {
+        if (source?.Rooms is null || source.Rooms.Count == 0)
+            return [];
+
+        var result = new List<PresentationItem>(64);
+        var number = 1;
+
+        foreach (var room in source.Rooms)
+        {
+            if (room?.Talks is null) continue;
+
+            foreach (var talk in room.Talks)
+            {
+                if (talk is null || string.IsNullOrWhiteSpace(talk.PresentationUrl))
+                    continue;
+
+                var href = Link.HrefForPresentation(talk.PresentationUrl);
+                if (string.IsNullOrWhiteSpace(href))
+                    continue;
+
+                var topic = string.IsNullOrWhiteSpace(talk.Topic) ? "(Без названия)" : talk.Topic.Trim();
+                result.Add(new PresentationItem(number, topic, href));
+                number++;
+            }
+        }
+
+        return result;
+    }
 }
+
+@* === Обёртка-контейнер с отступами и ограничением ширины === *@
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-8">
+
+            @if (_items.Count == 0)
+            {
+                <div class="alert alert-info my-3">Презентации не найдены.</div>
+            }
+            else
+            {
+                @* Десктопная версия: таблица в карточке (даёт внутренние паддинги) *@
+                <div class="d-none d-md-block">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-start" style="width: 64px;">№</th>
+                                            <th class="text-start">Тема</th>
+                                            <th class="text-center" style="width: 160px;">Презентация</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var p in _items)
+                                        {
+                                            <tr>
+                                                <td class="text-start">@p.Number</td>
+                                                <td class="text-start">@p.Topic</td>
+                                                <td class="text-center">
+                                                    <a href="@p.Url" target="_blank" rel="noopener noreferrer">Скачать</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Мобильная версия: список, тоже в карточке *@
+                <div class="d-md-none">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <ul class="list-group">
+                                @foreach (var p in _items)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="me-2">
+                                            <div class="fw-semibold">@p.Number. @p.Topic</div>
+                                        </div>
+                                        <a class="btn btn-sm btn-primary"
+                                           href="@p.Url"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            Скачать
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

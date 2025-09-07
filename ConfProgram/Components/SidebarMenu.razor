@@ -38,6 +38,11 @@
 
         <!-- Новая кнопка "Обратная связь" -->
         <li>
+            <a class="@GetActive("/presentation")" @onclick="@(() => NavigateTo("/presentation"))">Презентации</a>
+        </li>
+
+        <!-- Новая кнопка "Обратная связь" -->
+        <li>
             <a class="@GetActive("/feedback")" @onclick="@(() => NavigateTo("/feedback"))">Обратная связь</a>
         </li>
         

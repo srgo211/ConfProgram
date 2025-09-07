@@ -1,0 +1,37 @@
+﻿@page "/presentation"
+@using ConfProgram.Components
+@using ConfProgram.Models
+@inject ConfProgram.Services.ConferenceService ConferenceService
+
+@if (_loading)
+{
+    <div class="alert alert-info my-3">Загрузка презентаций…</div>
+}
+else if (_data is null)
+{
+    <div class="alert alert-warning my-3">Данные конференции не найдены.</div>
+}
+else
+{
+    <AllPresentations Data="_data" />
+}
+
+@code {
+    private bool _loading = true;
+    private ConferenceData? _data;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Русский: грузим данные один раз. Переименуйте на ваш метод загрузки.
+        await ConferenceService.LoadDataAsync();
+
+        _data = ConferenceService.Data;
+        _loading = false;
+
+
+    }  
+
+    
+}
+
+
